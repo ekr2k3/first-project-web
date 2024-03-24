@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <style>
+        body {
+            position: relative;
+        }
+
+        form {
+            border: solid;
+            width: 50%;
+            position: absolute;
+            right: 10%;
+            top: 50px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td {
+            padding: 7px;
+        }
+
+        input {
+            width: 90%;
+        }
+
+        #re {
+            position: absolute;
+            right: 10%;
+            bottom: 0px;
+        }
+        #emaolEx{
+            width: 250px;
+            height: 250px;
+            border: 1px solid;
+        }
+        .disable{
+            display: none;
+        }
+        .able{
+            display: block;
+        }
+    </style>
+    <form action="" >
+        <h2>Sign up</h2>
+        <table>
+            <tr>
+                <td><label for="email">Email</label></td>
+                <td>
+                    <input type="text" name="email" id="emai">
+                </td>
+
+            </tr>
+            <tr>
+                <td><label for="Pass">Password</label></td>
+                <td>
+                    <input type="text" name="Pass" id="pass">
+                </td>
+            </tr>
+            <tr>
+                <td><label for="Pass">Re-Password</label></td>
+                <td>
+                    <input type="text" name="rPass" id="rpass">
+                </td>
+            </tr>
+        </table>
+        <h6>
+            <a href="">Have account, turn back to Login</a>
+        </h6>
+        <div id="re">
+            <button type="submit">Sign Up</button>
+        </div>
+    </form>
+    <div id ="emaolEx" class="disable">
+        <b>Email đã tồn tại chọn 1 tron 2 để tiếp tục</b>
+        <a href="Login.html">quay lại login</a>
+        <br>
+        <a href="sign_up.html">Tiếp tục tạo với email mới</a>
+    </div>
+
+
+    <script>
+
+        function hamcheck_lengthPass(s) {
+            if (s.value !== "" && s.value.length < 8) {
+                event.preventDefault();
+                var nextS = s.nextElementSibling;
+
+                var pS = s.parentNode;
+
+                var p_post = document.createElement("p");
+                p_post.innerHTML = "<i>Tối thiểu 8 ký tự<\i>";
+                p_post.style.color = "red";
+
+                var c = pS.querySelector(".es");
+                if (c === null) {
+                    p_post.setAttribute("class", "es");
+                    if (nextS === null) {
+                        // không có thằng khác dưới ở dưới
+                        pS.appendChild(p_post)
+                    }
+                    else {
+                        pS.insertBefore(p_post, nextS);
+                    }
+                }
+            }
+        }
+        function hamcheck_typeMail(s) {
+            var e = s.value;
+            console.log(e);
+            var tail = "";
+            // @gmail.com = 10 [n-1-9,n-1]
+            for (var i = e.length - 1; i >= e.length - 1 - 9; i--) {
+                tail += e[i];
+                console.log(tail + "123");
+            }
+            // =>moc.liamg@
+
+            console.log(tail);
+
+            if (tail !== "moc.liamg@" && s.value !== "") {
+                event.preventDefault();
+                var nextS = s.nextElementSibling;
+
+                var pS = s.parentNode;
+
+                var p_post = document.createElement("p");
+                p_post.innerHTML = "<i>Email need @gmail.com<\i>";
+                p_post.style.color = "red";
+
+                var c = pS.querySelector(".es");
+                if (c === null) {
+                    p_post.setAttribute("class", "es");
+                    if (nextS === null) {
+                        // không có thằng khác dưới ở dưới
+                        pS.appendChild(p_post)
+                    }
+                    else {
+                        pS.insertBefore(p_post, nextS);
+                    }
+                }
+            }
+        }
+
+        function checkRePass(s, rs) {
+            if (s.value !== rs.value && s.value !== "") {
+                event.preventDefault();
+                var nextS = rs.nextElementSibling;
+
+                var pS = rs.parentNode;
+
+                var p_post = document.createElement("p");
+                p_post.innerHTML = "<i>RePass chưa giống pass<\i>";
+                p_post.style.color = "red";
+
+                var c = pS.querySelector(".es");
+                if (c === null) {
+                    p_post.setAttribute("class", "es");
+                    if (nextS === null) {
+                        // không có thằng khác dưới ở dưới
+                        pS.appendChild(p_post)
+                    }
+                    else {
+                        pS.insertBefore(p_post, nextS);
+                    }
+                }
+            }
+        }
+
+        var data = ["nam@gmail.com", "enkarin@gmail.com", "tester@gmail.com"];
+        
+        
+        function check_email_ex(s) {
+            //kiểm tra trong database xem s.value đã tồn tại chưa ở đây dùng tạm list giá trị cứng để test
+            for (var x = 0; x < data.length; x++) {
+                check = 0; // kix thuaatj bieens ddanhs daaus
+                if (s.value === data[x]) {
+                    check = 1;
+                }
+
+                if (check === 0) {
+                    var x = document.querySelector("#emaolEx");
+                    var y = document.querySelector("form");
+                    x.setAttribute("class","able");
+                    y.setAttribute("class","disable")
+                }
+            }
+        }
+
+
+
+        function Report_youNeedFillOut(s) {
+            // s là element muốn check
+            if (s.value === "") {
+
+                event.preventDefault();
+                var nextS = s.nextElementSibling;
+
+                var pS = s.parentNode;
+
+                var p_post = document.createElement("p");
+                p_post.innerHTML = "<i>Bạn cần điền ô này<\i>";
+                p_post.style.color = "red";
+
+                var c = pS.querySelector(".es");
+                if (c === null) {
+                    p_post.setAttribute("class", "es");
+                    if (nextS === null) {
+                        // không có thằng khác dưới ở dưới
+                        pS.appendChild(p_post)
+                    }
+                    else {
+                        pS.insertBefore(p_post, nextS);
+                    }
+                }
+            }
+        }
+
+        function ResetInputWhenFocus(s) {
+            s.onfocus = () => {
+                var nextSibling = s.nextElementSibling;
+                if (nextSibling !== null) {
+                    nextSibling.remove();
+                }
+            }
+        }
+
+        var x = document.querySelector("button");
+        x.onclick = (event) => {
+            var e = document.querySelector("#emai");
+            var p = document.querySelector("#pass");
+            var rp = document.querySelector("#rpass");
+            hamcheck_typeMail(e);
+            hamcheck_lengthPass(p);
+            checkRePass(p, rp);
+            check_email_ex(e);
+
+            Report_youNeedFillOut(e);
+            Report_youNeedFillOut(p);
+            Report_youNeedFillOut(rp);
+
+            ResetInputWhenFocus(e);
+            ResetInputWhenFocus(p);
+            ResetInputWhenFocus(rp);
+        }
+    </script>
+</body>
+
+</html>
