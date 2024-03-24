@@ -39,6 +39,7 @@
             right: 10%;
             bottom: 0px;
         }
+     
     </style>
     <form action="">
         <h2>Login</h2>
@@ -65,7 +66,7 @@
             <button type="submit">login</button>
         </div>
     </form>
-
+    
 
     <script>
         function Report_youNeedFillOut(s) {
@@ -81,19 +82,14 @@
                 p_post.innerHTML = "<i>Bạn cần điền ô này<\i>";
                 p_post.style.color = "red";
 
-                // Check if an error message already exists
-                var existingError = pS.querySelector(".error-message");
-
-                if (existingError === null) { // If no error message exists, create one
-                    var p_post = document.createElement("p");
-                    p_post.innerHTML = "<i>Bạn cần điền ô này</i>";
-                    p_post.style.color = "red";
-                    p_post.setAttribute("class", "error-message") // Adding a class to identify error messages
-
+                var c = pS.querySelector(".ee");
+                if (c === null) {
+                    p_post.setAttribute("class", "ee");
                     if (nextS === null) {
                         // không có thằng khác dưới ở dưới
-                        pS.appendChild(p_post);
-                    } else {
+                        pS.appendChild(p_post)
+                    }
+                    else {
                         pS.insertBefore(p_post, nextS);
                     }
                 }
@@ -106,32 +102,28 @@
 
                 var pS = s.parentNode;
 
-                // Check if an error message already exists
-                var existingError = pS.querySelector(".error-message");
+                var p_post = document.createElement("p");
+                p_post.innerHTML = "<i>Bạn dien sai<\i>";
+                p_post.style.color = "red";
 
-                if (existingError === null) { // If no error message exists, create one
-                    var p_post = document.createElement("p");
-                    p_post.innerHTML = "<i>Bạn dien sai</i>";
-                    p_post.style.color = "red";
-                    p_post.setAttribute("class", "error-message") // Adding a class to identify error messages
-
+                var c = pS.querySelector(".ee");
+                if (c === null) {
+                    p_post.setAttribute("class", "ee");
                     if (nextS === null) {
                         // không có thằng khác dưới ở dưới
-                        pS.appendChild(p_post);
-                    } else {
+                        pS.appendChild(p_post)
+                    }
+                    else {
                         pS.insertBefore(p_post, nextS);
                     }
                 }
             }
         }
-
         function ResetInputWhenFocus(s) {
             s.onfocus = () => {
                 var nextSibling = s.nextElementSibling;
-                while (nextSibling) {
-                    var toRemove = nextSibling;
-                    nextSibling = toRemove.nextElementSibling;
-                    toRemove.remove();
+                if(nextSibling !==null){
+                    nextSibling.remove();
                 }
             }
         }
