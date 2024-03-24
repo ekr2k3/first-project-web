@@ -68,7 +68,7 @@
 
 
     <script>
-        function Report_youNeedFillOut(s, event) {
+        function Report_youNeedFillOut(s) {
             // s là element muốn check
             if (s.value === "") {
 
@@ -81,35 +81,50 @@
                 p_post.innerHTML = "<i>Bạn cần điền ô này<\i>";
                 p_post.style.color = "red";
 
-                if (nextS === null) {
-                    // không có thằng khác dưới ở dưới
-                    pS.appendChild(p_post)
-                }
-                else {
-                    pS.insertBefore(p_post, nextS);
+                // Check if an error message already exists
+                var existingError = pS.querySelector(".error-message");
+
+                if (existingError === null) { // If no error message exists, create one
+                    var p_post = document.createElement("p");
+                    p_post.innerHTML = "<i>Bạn dien sai</i>";
+                    p_post.style.color = "red";
+                    p_post.setAttribute("class", "error-message") // Adding a class to identify error messages
+
+                    if (nextS === null) {
+                        // không có thằng khác dưới ở dưới
+                        pS.appendChild(p_post);
+                    } else {
+                        pS.insertBefore(p_post, nextS);
+                    }
                 }
             }
         }
-        function Report_WrongDataInput(s, event, data) {
+        function Report_WrongDataInput(s, data) {
             if (s.value !== "" && s.value !== data) {
                 event.preventDefault();
                 var nextS = s.nextElementSibling;
 
                 var pS = s.parentNode;
 
-                var p_post = document.createElement("p");
-                p_post.innerHTML = "<i>Bạn dien sai<\i>";
-                p_post.style.color = "red";
+                // Check if an error message already exists
+                var existingError = pS.querySelector(".error-message");
 
-                if (nextS === null) {
-                    // không có thằng khác dưới ở dưới
-                    pS.appendChild(p_post)
-                }
-                else {
-                    pS.insertBefore(p_post, nextS);
+                if (existingError === null) { // If no error message exists, create one
+                    var p_post = document.createElement("p");
+                    p_post.innerHTML = "<i>Bạn dien sai</i>";
+                    p_post.style.color = "red";
+                    p_post.setAttribute("class", "error-message") // Adding a class to identify error messages
+
+                    if (nextS === null) {
+                        // không có thằng khác dưới ở dưới
+                        pS.appendChild(p_post);
+                    } else {
+                        pS.insertBefore(p_post, nextS);
+                    }
                 }
             }
         }
+
         function ResetInputWhenFocus(s) {
             s.onfocus = () => {
                 var nextSibling = s.nextElementSibling;
@@ -127,10 +142,10 @@
             // data cac o nay tu loi khac nhung o dau fixable data de text
             var dataE = "enkarin@gmail.com";
             var datapass = "123";
-            Report_youNeedFillOut(e, event);
-            Report_youNeedFillOut(p, event);
-            Report_WrongDataInput(e, event, dataE);
-            Report_WrongDataInput(p, event, datapass);
+            Report_youNeedFillOut(e);
+            Report_youNeedFillOut(p);
+            Report_WrongDataInput(e, dataE);
+            Report_WrongDataInput(p, datapass);
             ResetInputWhenFocus(e);
             ResetInputWhenFocus(p);
         }
