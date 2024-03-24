@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <style>
+        body {
+            position: relative;
+        }
+
+        form {
+            border: solid;
+            width: 50%;
+            position: absolute;
+            right: 10%;
+            top: 50px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td {
+            padding: 7px;
+        }
+
+        input {
+            width: 90%;
+        }
+
+        #re {
+            position: absolute;
+            right: 10%;
+            bottom: 0px;
+        }
+    </style>
+    <form action="">
+        <h2>Login</h2>
+        <table>
+            <tr>
+                <td><label for="email">Email</label></td>
+                <td>
+                    <input type="text" name="email" id="emai">
+                </td>
+
+            </tr>
+            <tr>
+                <td><label for="Pass">Password</label></td>
+                <td>
+                    <input type="text" name="Pass" id="pass">
+                </td>
+            </tr>
+        </table>
+        <h6><a href="">Forgot your password</a>
+            /
+            <a href="sign_up.html">Didn't have account</a>
+        </h6>
+        <div id="re">
+            <button type="submit">login</button>
+        </div>
+    </form>
+
+
+    <script>
+        function Report_youNeedFillOut(s, event) {
+            // s là element muốn check
+            if (s.value === "") {
+
+                event.preventDefault();
+                var nextS = s.nextElementSibling;
+
+                var pS = s.parentNode;
+
+                var p_post = document.createElement("p");
+                p_post.innerHTML = "<i>Bạn cần điền ô này<\i>";
+                p_post.style.color = "red";
+
+                if (nextS === null) {
+                    // không có thằng khác dưới ở dưới
+                    pS.appendChild(p_post)
+                }
+                else {
+                    pS.insertBefore(p_post, nextS);
+                }
+            }
+        }
+        function Report_WrongDataInput(s, event, data) {
+            if (s.value !== "" && s.value !== data) {
+                event.preventDefault();
+                var nextS = s.nextElementSibling;
+
+                var pS = s.parentNode;
+
+                var p_post = document.createElement("p");
+                p_post.innerHTML = "<i>Bạn dien sai<\i>";
+                p_post.style.color = "red";
+
+                if (nextS === null) {
+                    // không có thằng khác dưới ở dưới
+                    pS.appendChild(p_post)
+                }
+                else {
+                    pS.insertBefore(p_post, nextS);
+                }
+            }
+        }
+        function ResetInputWhenFocus(s) {
+            s.onfocus = () => {
+                var nextSibling = s.nextElementSibling;
+                while (nextSibling) {
+                    var toRemove = nextSibling;
+                    nextSibling = toRemove.nextElementSibling;
+                    toRemove.remove();
+                }
+            }
+        }
+        var x = document.querySelector("button");
+        x.onclick = (event) => {
+            var e = document.querySelector("#emai");
+            var p = document.querySelector("#pass");
+            // data cac o nay tu loi khac nhung o dau fixable data de text
+            var dataE = "enkarin@gmail.com";
+            var datapass = "123";
+            Report_youNeedFillOut(e, event);
+            Report_youNeedFillOut(p, event);
+            Report_WrongDataInput(e, event, dataE);
+            Report_WrongDataInput(p, event, datapass);
+            ResetInputWhenFocus(e);
+            ResetInputWhenFocus(p);
+        }
+
+    </script>
+</body>
+
+</html>
